@@ -1,34 +1,35 @@
 import { Controller, Get, Query, Post, Body, Put, Param, Delete } from '@nestjs/common';
 import { CreateHeroDto } from './create-hero.dto';
 import { UpdateHeroDto } from './update-hero.dto';
-import { HeroesService } from './heroes.service'
+import { Hero } from './hero';
+import { HeroesService } from './heroes.service';
 
 @Controller('Heroes')
 export class HeroesController {
   constructor(private readonly heroesService: HeroesService) { }
 
   @Post()
-  create(@Body() HeroDto: CreateHeroDto) {
+  async create(@Body() CreateHeroDto: CreateHeroDto) {
     this.heroesService.create(CreateHeroDto);
   }
 
   @Get()
-  findAll() {
+  async findAll() {
     this.heroesService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
     this.heroesService.find(Number(id));
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() HeroDto: UpdateHeroDto) {
+  async update(@Param('id') id: string, @Body() UpdateHeroDto: UpdateHeroDto) {
     this.heroesService.update(Number(id), UpdateHeroDto);
 }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string) {
     this.heroesService.delete(Number(id));
   }
 }
