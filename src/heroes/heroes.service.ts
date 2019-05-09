@@ -5,7 +5,14 @@ import { Hero } from './hero';
 
 @Injectable()
 export class HeroesService {
-  private readonly heroes: Hero[] = [];
+  private readonly heroes: Hero[] = [
+    { id: 1, name: 'Hero A' },
+    { id: 2, name: 'Hero B' },
+    { id: 3, name: 'Hero C' },
+    { id: 4, name: 'Hero D' },
+    { id: 5, name: 'Hero E' },
+    { id: 6, name: 'Hero F' }
+  ];
 
   create(heroDto: CreateHeroDto) {
     var newHero = <Hero> heroDto;
