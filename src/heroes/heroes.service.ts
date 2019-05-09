@@ -24,7 +24,7 @@ export class HeroesService {
 
   // to do: improve
   update(id: number, heroDto: UpdateHeroDto) {
-    var selectedHero = selectedHero(id);
+    var selectedHero = this.selectHero(id);
     var position = this.heroArrayPosition(id);
 
     selectedHero = <Hero> heroDto;

@@ -9,27 +9,37 @@ export class HeroesController {
   constructor(private readonly heroesService: HeroesService) { }
 
   @Post()
-  async create(@Body() CreateHeroDto: CreateHeroDto) {
+  async create(@Body() CreateHeroDto: CreateHeroDto): Promise<string> {
     this.heroesService.create(CreateHeroDto);
+
+    return 'Hero created !'
   }
 
   @Get()
-  async findAll() {
-    this.heroesService.findAll();
+  async findAll(): Promise<Hero[]> {
+    var heroes = this.heroesService.findAll();
+
+    return heroes;
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
-    this.heroesService.find(Number(id));
+  async findOne(@Param('id') id: string): Promise<Hero> {
+    var hero = this.heroesService.find(Number(id));
+
+    return hero;
   }
 
   @Put(':id')
-  async update(@Param('id') id: string, @Body() UpdateHeroDto: UpdateHeroDto) {
+  async update(@Param('id') id: string, @Body() UpdateHeroDto: UpdateHeroDto): Promise<string> {
     this.heroesService.update(Number(id), UpdateHeroDto);
+
+    return `Hero #${id} updated !`;
 }
 
   @Delete(':id')
-  async remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string): Promise<string> {
     this.heroesService.delete(Number(id));
+
+    return `Hero #${id} deleted !`;
   }
 }
