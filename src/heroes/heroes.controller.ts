@@ -1,10 +1,11 @@
 import { Controller, Get, Query, Post, Body, Put, Param, Delete } from '@nestjs/common';
-import { HeroDto } from './hero.dto';
+import { CreateHeroDto } from './create-hero.dto';
+import { UpdateHeroDto } from './update-hero.dto';
 
 @Controller('Heros')
 export class HerosController {
   @Post()
-  create(@Body() HeroDto: HeroDto) {
+  create(@Body() HeroDto: CreateHeroDto) {
     return 'Add Hero';
   }
 
@@ -19,7 +20,7 @@ export class HerosController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() HeroDto: HeroDto) {
+  update(@Param('id') id: string, @Body() HeroDto: UpdateHeroDto) {
     return `Update #${id} Hero`;
   }
 
