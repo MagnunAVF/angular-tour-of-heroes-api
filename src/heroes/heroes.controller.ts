@@ -1,4 +1,6 @@
-import { Controller, Get, Query, Post, Body, Put, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common';
+import { NotFoundException, UnprocessableEntityException } from '@nestjs/common';
+
 import { CreateHeroDto } from './create-hero.dto';
 import { UpdateHeroDto } from './update-hero.dto';
 import { Hero } from './hero';
@@ -9,10 +11,13 @@ export class HeroesController {
   constructor(private readonly heroesService: HeroesService) { }
 
   @Post()
-  async create(@Body() CreateHeroDto: CreateHeroDto): Promise<string> {
-    this.heroesService.create(CreateHeroDto);
+  async create(@Body() createHeroDto: CreateHeroDto) {
+    var name = createHeroDto.name;
+    if (!name) {
+      throw new UnprocessableEntityException();
+    }
 
-    return 'Hero created !'
+    this.heroesService.create(createHeroDto);
   }
 
   @Get()
@@ -24,22 +29,40 @@ export class HeroesController {
 
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<Hero> {
-    var hero = this.heroesService.find(Number(id));
+    try {
+      var hero = this.heroesService.find(Number(id));
+    }
+    catch(e) {
+      throw new NotFoundException();
+    }
 
     return hero;
   }
 
   @Put(':id')
-  async update(@Param('id') id: string, @Body() UpdateHeroDto: UpdateHeroDto): Promise<string> {
-    this.heroesService.update(Number(id), UpdateHeroDto);
+  async update(@Param('id') id: string, @Body() updateHeroDto: UpdateHeroDto): Promise<Hero> {
+    var name = updateHeroDto.name;
+    if (!name) {
+      throw new UnprocessableEntityException();
+    }
 
-    return `Hero #${id} updated !`;
+    try {
+      var hero = this.heroesService.update(Number(id), updateHeroDto);
+    }
+    catch(e) {
+      throw new NotFoundException();
+    }
+
+    return hero;
 }
 
   @Delete(':id')
-  async remove(@Param('id') id: string): Promise<string> {
-    this.heroesService.delete(Number(id));
-
-    return `Hero #${id} deleted !`;
+  async remove(@Param('id') id: string){
+    try {
+      this.heroesService.delete(Number(id));
+    }
+    catch(e) {
+      throw new NotFoundException();
+    }
   }
 }

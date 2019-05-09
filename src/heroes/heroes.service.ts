@@ -26,22 +26,40 @@ export class HeroesService {
   }
 
   find(id: number): Hero {
-    return this.selectHero(id);
+    var selectedHero = this.selectHero(id);
+    if(!selectedHero) {
+      throw new Error('Hero not found !');
+    }
+
+    return selectedHero;
   }
 
-  // to do: improve
-  update(id: number, heroDto: UpdateHeroDto) {
+  // To do -> improve
+  update(id: number, heroDto: UpdateHeroDto): Hero{
     var selectedHero = this.selectHero(id);
+    if(!selectedHero) {
+      throw new Error('Hero not found !');
+    }
+
     var position = this.heroArrayPosition(id);
 
     selectedHero = <Hero> heroDto;
     selectedHero.id = id;
 
     this.heroes[position] = selectedHero;
+
+    return this.heroes[position];
   }
 
   delete(id: number) {
-    delete this.heroes[id];
+    var selectedHero = this.selectHero(id);
+    if(!selectedHero) {
+      throw new Error('Hero not found !');
+    }
+
+    var position = this.heroArrayPosition(id);
+
+    delete this.heroes[position];
   }
 
   private generateID(): number {
