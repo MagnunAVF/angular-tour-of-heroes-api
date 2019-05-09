@@ -1,31 +1,34 @@
 import { Controller, Get, Query, Post, Body, Put, Param, Delete } from '@nestjs/common';
 import { CreateHeroDto } from './create-hero.dto';
 import { UpdateHeroDto } from './update-hero.dto';
+import { HeroesService } from './heroes.service'
 
-@Controller('Heros')
-export class HerosController {
+@Controller('Heroes')
+export class HeroesController {
+  constructor(private readonly heroesService: HeroesService) { }
+
   @Post()
   create(@Body() HeroDto: CreateHeroDto) {
-    return 'Add Hero';
+    this.heroesService.create(CreateHeroDto);
   }
 
   @Get()
   findAll() {
-    return 'All heroes';
+    this.heroesService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return `Return #${id} Hero`;
+    this.heroesService.find(Number(id));
   }
 
   @Put(':id')
   update(@Param('id') id: string, @Body() HeroDto: UpdateHeroDto) {
-    return `Update #${id} Hero`;
-  }
+    this.heroesService.update(Number(id), UpdateHeroDto);
+}
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return `Removes #${id} Hero`;
+    this.heroesService.delete(Number(id));
   }
 }
