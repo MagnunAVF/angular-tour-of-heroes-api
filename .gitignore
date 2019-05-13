@@ -2,7 +2,7 @@
 node_modules
 
 # env vars
-config.ts
+.env
 
 # builded app
 dist
