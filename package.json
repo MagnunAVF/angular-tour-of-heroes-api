@@ -24,6 +24,7 @@
     "@nestjs/common": "^5.4.0",
     "@nestjs/core": "^5.4.0",
     "aws-lambda": "^0.1.2",
+    "aws-sdk": "^2.453.0",
     "aws-serverless-express": "^3.3.5",
     "express": "^4.16.4",
     "reflect-metadata": "^0.1.12",
