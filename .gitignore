@@ -1,1 +1,8 @@
+# installed dependencies
 node_modules
+
+# env vars
+config.ts
+
+# builded app
+dist
